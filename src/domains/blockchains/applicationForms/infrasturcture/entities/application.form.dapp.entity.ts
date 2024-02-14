@@ -1,6 +1,7 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { DappAuth } from '@/blockchains/dapp/entities/dapp.auth.entity';
 import { BaseEntity } from '@/libs/database/orm/typeorm/base/base.entity';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { ApplicationForm } from './application.form.entity';
 
 
@@ -61,5 +62,6 @@ export class ApplicationFormDapp extends BaseEntity {
   @JoinColumn( { name: 'application_form_id' } )
   application_form: ApplicationForm;
   
-  
+  @ManyToOne( () => DappAuth )
+  dapp_auth: DappAuth;
 }

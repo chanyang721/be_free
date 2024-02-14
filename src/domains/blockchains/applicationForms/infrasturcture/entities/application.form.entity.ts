@@ -46,6 +46,7 @@ export class ApplicationForm extends BaseEntity {
   /*
    * Relations
    * */
+  
   @OneToOne(
     () => ApplicationFormDapp,
     ( applicationFormDapp ) => applicationFormDapp.application_form,

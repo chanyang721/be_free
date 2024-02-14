@@ -34,7 +34,7 @@ export class ApplicationFormsService {
   
   @Cron(CronExpression.EVERY_SECOND)
   async softDeleteExpiredApplicationForm(): Promise<void> {
-    console.log('[softDeleteExpiredApplicationForm]: test log')
+    console.log('[softDeleteExpiredApplicationForm]: CronExpression.EVERY_SECOND')
   }
   
   async getApplicationFormById( applicationFormId: string ): Promise<ApplicationForm> {

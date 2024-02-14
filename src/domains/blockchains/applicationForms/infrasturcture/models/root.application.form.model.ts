@@ -25,7 +25,6 @@ export type IRootApplicationForm = Omit<ApplicationForm,
 
 export type RootApplicationFormDocument = HydratedDocument<RootApplicationForm>;
 
-
 @Schema( { collection: 'ROOT_APPLICATION_FORM' } )
 export class RootApplicationForm extends AggregateRoot
   implements IRootApplicationForm, BaseModel {
@@ -36,7 +35,6 @@ export class RootApplicationForm extends AggregateRoot
     super();
     this.autoCommit = true;
   }
-  
   
   @Prop()
   id: string;

@@ -27,7 +27,12 @@ export class DappRepository {
   
   async findDappByVerificationCode( code: string ): Promise<Dapp> {
     const dapp: Dapp = await this.dataSource.manager.findOne( Dapp, {
-      where: { verification_code: code },
+      relations: {
+        auth: true
+      },
+      where: {
+        auth: { verification_code: code }
+      },
     } );
     
     return dapp;
