@@ -136,7 +136,6 @@ export class CommonConfigService {
       email  : {
         connectionString: this.configService.get<string>( 'AZURE_EMAIL_CONNECTION_STRING' ),
       },
-      
     };
   }
   

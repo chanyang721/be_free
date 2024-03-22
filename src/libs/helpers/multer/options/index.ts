@@ -54,6 +54,7 @@ export const multerOptions: MulterOptions = {
   fileFilter: ( request: Request, file: Express.Multer.File, callback: Function ): void => {
     const fileName = file.originalname.split( '.' );
     const fileExtension = fileName[ fileName.length - 1 ];
+    console.log("request", request)
     // if ( file.mimetype.match( /\/(pdf|png|sgv)$/ ) ) {
       callback( null, true );
     // }

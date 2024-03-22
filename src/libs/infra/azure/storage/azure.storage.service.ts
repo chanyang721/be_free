@@ -1,66 +1,78 @@
-import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
-import { Injectable, Logger } from '@nestjs/common';
-
-
+import { CommonConfigService } from '@/libs/config/common.config.service';
+import {
+  BlobServiceClient,
+  BlockBlobUploadOptions,
+  BlockBlobUploadResponse,
+  ContainerClient,
+}                                                  from '@azure/storage-blob';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AzureStorageService {
-  private readonly logger: Logger = new Logger( AzureStorageService.name );
-  private readonly AZURE_STORAGE_CONNECTION_STRING: string;
-  private readonly blobServiceClient: BlobServiceClient;
+  private AZURE_STORAGE_CONNECTION_STRING: string;
+  private blobServiceClient: BlobServiceClient;
+  constructor(
+    private readonly logger: Logger,
+    private readonly commonConfigService: CommonConfigService
+  ) {
+    const azureAccessConfig = this.commonConfigService.accessAzureConfig
+    this.AZURE_STORAGE_CONNECTION_STRING = azureAccessConfig.storage.connectionString
+    this.connectStorageService()
+  }
   
-  
-  constructor() {
-    this.AZURE_STORAGE_CONNECTION_STRING =
-      process.env.AZURE_STORAGE_CONNECTION_STRING;
-    
-    if ( this.AZURE_STORAGE_CONNECTION_STRING ) {
-      this.logger.debug( 'AZURE_STORAGE is connected' );
+  private connectStorageService () {
+    try {
       this.blobServiceClient = BlobServiceClient.fromConnectionString(
         this.AZURE_STORAGE_CONNECTION_STRING,
       );
+      this.logger.debug('AZURE_STORAGE is connected');
     }
-    else {
-      this.logger.debug( 'AZURE_STORAGE_CONNECTION_STRING is undefined' );
+    catch ( error ) {
+      this.logger.error(`[connectStorageService]: ${error.message}`);
     }
   }
-  
   
   async uploadFile(
     containerName: string,
-    path: string,
+    filePath: string,
     blobName: string,
     file: Buffer,
+    options?: BlockBlobUploadOptions,
   ): Promise<string> {
     const containerClient: ContainerClient =
-      this.blobServiceClient.getContainerClient( containerName );
-    await containerClient.createIfNotExists( { access: 'container' } );
+      this.blobServiceClient.getContainerClient(containerName);
+    await containerClient.createIfNotExists({ access: 'container' });
     
     const blockBlobClient = containerClient.getBlockBlobClient(
-      `${ path }/${ blobName }`,
+      `${filePath}/${blobName}`,
     );
-    const uploadBlobResponse = await blockBlobClient.upload( file, file.length, {
-      blobHTTPHeaders: { blobContentType: 'image/png' },
-    } );
+    const uploadBlobResponse = await blockBlobClient.upload(
+      file,
+      file.length,
+      options,
+    );
     
     this.logger.debug(
-      `File ${ blobName } uploaded at ${ containerName } container, requestId: ${ uploadBlobResponse.requestId }`,
+      `File ${blobName} uploaded at ${containerName} container, requestId: ${uploadBlobResponse.requestId}`,
     );
-    return blockBlobClient.url;
+    const blobURL: string = `${containerClient.url}/${filePath}/${blobName}`;
+    return blobURL;
   }
   
-  
-  async deleteFile( containerName: string, filePath: string ): Promise<void> {
-    const containerClient: ContainerClient =
-      this.blobServiceClient.getContainerClient( containerName );
-    const blobs = containerClient.listBlobsByHierarchy( containerName, {
-      prefix: filePath,
-    } );
+  async deleteFile(containerName: string, filePath: number) {
+    console.log(`[deleteFile]: filePath: ${filePath}`);
+    if (!filePath) return;
     
-    for await ( const blob of blobs ) {
-      const blobClient = containerClient.getBlobClient( blob.name );
+    const containerClient: ContainerClient =
+      this.blobServiceClient.getContainerClient(containerName);
+    const blobs = containerClient.listBlobsByHierarchy(containerName, {
+      prefix: filePath.toString(),
+    });
+    
+    for await (const blob of blobs) {
+      const blobClient = containerClient.getBlobClient(blob.name);
       await blobClient.deleteIfExists();
-      console.log( `${ containerName }/${ filePath } Blob deleted: ${ blob.name }` );
+      console.log(`${containerName}/${filePath} Blob deleted: ${blob.name}`);
     }
   }
 }

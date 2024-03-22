@@ -17,7 +17,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
+  Post, Req,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
@@ -59,6 +59,22 @@ export class ApplicationFormsController
     } );
   }
   
+  @Post( 'test' )
+  @UseInterceptors( AnyFilesInterceptor( multerOptions ) )
+  @ApiConsumes( 'multipart/form-data' )
+  async testApplicationForm(
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body() registerApplicationFormDto: any,
+  ): Promise<ResponseDto<boolean>> {
+    console.log("registerApplicationFormDto", registerApplicationFormDto)
+    console.log("files", files)
+    
+    return new ResponseDto( {
+      statusCode: HttpStatusCode.Created,
+      message   : '신청서가 정상적으로 접수되었습니다.',
+      data      : true,
+    } );
+  }
   
   @Post( '' )
   @UseInterceptors( AnyFilesInterceptor( multerOptions ) )
