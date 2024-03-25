@@ -10,8 +10,8 @@ import {
   RootApplicationFormSchema,
 } from '@/blockchains/applicationForms/infrasturcture/models/root.application.form.model';
 import { CommonConfigService } from '@/libs/config/common.config.service';
-import { AzureCommunicationService } from '@/libs/infra/azure/mail/azure.communication.service';
-import { AzureStorageService } from '@/libs/infra/azure/storage/azure.storage.service';
+import { AzureCommunicationService } from '@/libs/infra/cloud/azure/mail/azure.communication.service';
+import { AzureStorageService } from '@/libs/infra/cloud/azure/storage/azure.storage.service';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';

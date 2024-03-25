@@ -5,8 +5,8 @@ import { Wallet } from './wallet.entity';
 
 
 
-@Entity( { name: 'rel_wallet_account' } )
-export class RelWalletAccount extends BaseEntity {
+@Entity( { name: 'wallet_account' } )
+export class WalletAccount extends BaseEntity {
   /*
    * Columns
    * */
@@ -15,10 +15,10 @@ export class RelWalletAccount extends BaseEntity {
   /*
    * FK Columns
    * */
-  @Column( { type: 'uuid', length: 36 } )
+  @Column( { type: 'bigint' } )
   wallet_id: string;
   
-  @Column( { type: 'uuid', length: 36 } )
+  @Column( { type: 'bigint' } )
   account_id: string;
   
   /*

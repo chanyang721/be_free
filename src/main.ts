@@ -30,6 +30,8 @@ async function bootstrap() {
   
   app.use( compression() );
   
+  app.enableShutdownHooks()
+  
   await fundamentals( app );
   
   await setupSwagger( app );

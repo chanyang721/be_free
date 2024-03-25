@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommonConfigService } from '../../../libs/config/common.config.service';
-import { AzureStorageService } from '../../../libs/infra/azure/storage/azure.storage.service';
+import { AzureStorageService } from '@/libs/infra/cloud/azure/storage/azure.storage.service';
 import { MailService } from '../../../libs/infra/mail/mail.srevice';
 import { DappRepository } from './dapp.repository';
 import { DappDto } from './dtos/dapp.dto';

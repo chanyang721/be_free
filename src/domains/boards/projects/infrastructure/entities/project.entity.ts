@@ -16,7 +16,7 @@ export class ProjectEntity extends BaseEntity {
   } )
   name: string;
   
-  @Column( { type: 'uuid' } )
+  @Column( { type: 'bigint' } )
   user_id: string;
   
   

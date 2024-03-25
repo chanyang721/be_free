@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AzureStorageService } from '../../../libs/infra/azure/storage/azure.storage.service';
+import { AzureStorageService } from '@/libs/infra/cloud/azure/storage/azure.storage.service';
 import { MailModule } from '../../../libs/infra/mail/mail.module';
 import { MailService } from '../../../libs/infra/mail/mail.srevice';
 import { DappController } from './dapp.controller';

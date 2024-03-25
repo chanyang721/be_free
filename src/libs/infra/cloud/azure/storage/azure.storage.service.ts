@@ -9,10 +9,10 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AzureStorageService {
+  private readonly logger: Logger = new Logger(AzureStorageService.name)
   private AZURE_STORAGE_CONNECTION_STRING: string;
   private blobServiceClient: BlobServiceClient;
   constructor(
-    private readonly logger: Logger,
     private readonly commonConfigService: CommonConfigService
   ) {
     const azureAccessConfig = this.commonConfigService.accessAzureConfig
@@ -59,7 +59,7 @@ export class AzureStorageService {
     return blobURL;
   }
   
-  async deleteFile(containerName: string, filePath: number) {
+  async deleteFile(containerName: string, filePath: string) {
     console.log(`[deleteFile]: filePath: ${filePath}`);
     if (!filePath) return;
     

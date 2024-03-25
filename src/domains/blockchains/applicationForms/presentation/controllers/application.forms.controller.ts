@@ -5,10 +5,9 @@ import {
   RegisterApplicationFormDto,
   TermAgreementDto,
 } from '@/blockchains/applicationForms/presentation/dtos';
-import { DappDto } from '@/blockchains/dapp/dtos/dapp.dto';
 import { ResponseDto } from '@/libs/fundamentals/interceptors/response/dto/response.dto';
 import { contractAuditMulterOptions, dappIconMulterOptions, multerOptions } from '@/libs/helpers/multer/options';
-import { AzureCommunicationService } from '@/libs/infra/azure/mail/azure.communication.service';
+import { AzureCommunicationService } from '@/libs/infra/cloud/azure/mail/azure.communication.service';
 import { Public } from '@/libs/utils/decoretors';
 import {
   Body,
@@ -96,12 +95,12 @@ export class ApplicationFormsController
   
   @ApiParam( {
     name   : 'version',
-    type   : Number,
+    type   : String,
     example: 1,
   } )
   @Get( '/terms/:version' )
   async getTermsAgreementFormat(
-    @Param( 'version', ParseIntPipe ) version: number,
+    @Param( 'version' ) version: string,
   ): Promise<ResponseDto<TermAgreementDto[]>> {
     const termsDto: TermAgreementDto[] =
       await this.applicationFormsService.getTeemAgreements( version );
@@ -178,7 +177,7 @@ export class ApplicationFormsController
     const result = await this.azureCommunicationService.sendEmail(
       'DoNotReply@',
       [ { address: 'chanyang721@gmail.com' } ],
-      content,
+      { subject: '제목', html: content },
     );
     
     return new ResponseDto( {

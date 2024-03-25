@@ -16,7 +16,7 @@ export class GroupEntity extends BaseEntity {
   @Column( { length: 150, nullable: true, comment: '링크 접근 비밀번호, group_id의 첫 6문자' } )
   password: string;
   
-  @Column( { type: 'uuid', length: 36, comment: '연결된 프로젝트의 아이디' } )
+  @Column( { type: 'bigint', comment: '연결된 프로젝트의 아이디' } )
   project_id: string;
   
   

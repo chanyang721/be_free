@@ -1,6 +1,6 @@
+import { WalletAccount } from '@/blockchains/wallets/entities/wallet-account.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '@/libs/database/orm/typeorm/base/base.entity';
-import { RelWalletAccount } from './rel-wallet-account.entity';
 
 
 
@@ -16,7 +16,7 @@ export class Wallet extends BaseEntity {
   deep_link: string;
   
   @OneToMany(
-    () => RelWalletAccount,
+    () => WalletAccount,
     rel_wallet_account => rel_wallet_account.wallet )
-  rel_wallet_accounts: RelWalletAccount[];
+  rel_wallet_accounts: WalletAccount[];
 }

@@ -22,7 +22,7 @@ export class FileEntity extends BaseEntity {
   @DeleteDateColumn( { nullable: true } )
   deleted_at: Date;
   
-  @Column( { type: 'uuid', length: 36, comment: '그룹 id - uuid' } )
+  @Column( { type: 'bigint', comment: '그룹 id' } )
   group_id: string;
   
   @ManyToOne( () => GroupEntity, group => group.files, {

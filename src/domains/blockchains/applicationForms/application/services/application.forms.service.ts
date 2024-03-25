@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 import { ApplicationFormTermsAgreement } from 'src/domains/blockchains/applicationForms/infrasturcture/entities';
 import { DappDto } from '@/blockchains/dapp/dtos/dapp.dto';
 import { CommonConfigService } from '@/libs/config/common.config.service';
-import { AzureStorageService } from '@/libs/infra/azure/storage/azure.storage.service';
+import { AzureStorageService } from '@/libs/infra/cloud/azure/storage/azure.storage.service';
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ApplicationForm } from '@/blockchains/applicationForms/infrasturcture/entities/application.form.entity';
@@ -56,7 +56,7 @@ export class ApplicationFormsService {
   }
   
   
-  public async getTeemAgreements( version: number ): Promise<TermAgreementDto[]> {
+  public async getTeemAgreements( version: string ): Promise<TermAgreementDto[]> {
     const terms: ApplicationFormTermsAgreement[] =
       await this.applicationFormRepository.findTermsAgreements( version );
     

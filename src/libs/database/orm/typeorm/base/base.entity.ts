@@ -4,9 +4,8 @@ import { BaseEntity as TypeOrmBaseEntity, CreateDateColumn, PrimaryGeneratedColu
 
 
 export abstract class BaseEntity {
-  @IsUUID()
   @IsOptional()
-  @PrimaryGeneratedColumn( 'uuid' )
+  @PrimaryGeneratedColumn( { type: 'bigint' } )
   id: string;
   
   @IsDateString()

@@ -10,6 +10,7 @@ import {BadGatewayException, Injectable, Logger} from '@nestjs/common';
 
 @Injectable()
 export class AzureCommunicationService {
+  private readonly logger: Logger = new Logger(AzureCommunicationService.name)
   private AZURE_EMAIL_CONNECTION_STRING: string;
   private emailClient: EmailClient;
   
@@ -26,10 +27,10 @@ export class AzureCommunicationService {
     try {
       if (this.AZURE_EMAIL_CONNECTION_STRING) {
         this.emailClient = new EmailClient(this.AZURE_EMAIL_CONNECTION_STRING);
-        console.debug('AZURE_EMAIL is connected');
+        this.logger.debug('AZURE_EMAIL is connected');
       }
     } catch (error) {
-      console.error(`[connectEmailService]: ${error}`);
+      this.logger.error(`[connectEmailService]: ${error}`);
     }
   }
   

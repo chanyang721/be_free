@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, VersionColumn } from 'typeorm';
 import { BaseEntity } from '@/libs/database/orm/typeorm/base/base.entity';
 import { TERMS_AGREEMENT_NAME } from './enums';
 
@@ -32,6 +32,6 @@ export class ApplicationFormTermsAgreement extends BaseEntity {
   is_active: boolean;
   
   @ApiProperty()
-  @Column( { comment: '약관 동의 버전' } )
-  version: number;
+  @VersionColumn( { type: 'bigint', comment: '약관 동의 버전' } )
+  version: string;
 }

@@ -2,7 +2,7 @@ import { DappAuth } from '@/blockchains/dapp/entities/dapp.auth.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonConfigService } from '@/libs/config/common.config.service';
-import { AzureStorageService } from '@/libs/infra/azure/storage/azure.storage.service';
+import { AzureStorageService } from '@/libs/infra/cloud/azure/storage/azure.storage.service';
 import { MailService } from '@/libs/infra/mail/mail.srevice';
 import { DappController } from './dapp.controller';
 import { DappRepository } from './dapp.repository';

@@ -44,7 +44,7 @@ export class ApplicationFormsRepository
   }
   
   
-  async findTermsAgreements( version: number ): Promise<ApplicationFormTermsAgreement[]> {
+  async findTermsAgreements( version: string ): Promise<ApplicationFormTermsAgreement[]> {
     const terms: ApplicationFormTermsAgreement[] =
       await this.dataSource.manager.find( ApplicationFormTermsAgreement, {
         where: { is_active: true, version: version },

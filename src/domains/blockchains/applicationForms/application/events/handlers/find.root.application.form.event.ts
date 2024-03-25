@@ -1,4 +1,4 @@
-import { AzureCommunicationService } from '@/libs/infra/azure/mail/azure.communication.service';
+import { AzureCommunicationService } from '@/libs/infra/cloud/azure/mail/azure.communication.service';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 

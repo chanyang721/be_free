@@ -16,7 +16,7 @@ export interface ApplicationFormControllerAdaptor {
   // getDappByVerificationCode(code: string): Promise<ResponseDto<DappDto>>;
   
   getTermsAgreementFormat(
-    version: number,
+    version: string,
   ): Promise<ResponseDto<TermAgreementDto[]>>;
   
   registerApplicationForm(
