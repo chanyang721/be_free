@@ -15,8 +15,8 @@ export class ShutdownEvent implements OnModuleDestroy {
   
   async onModuleDestroy() {
     this.logger.log(`[onModuleDestroy]: Process id: ${this.PROCESS_ID}`)
-    
-    
-    
+    /*
+    * 서버 꺼지는 현상 작동 로직
+    * */
   }
 }

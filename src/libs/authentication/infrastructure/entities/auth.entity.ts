@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { UserEntity } from '@/users/infrastructure/entities';
 import { BaseEntity } from '@/libs/database/orm/typeorm/base/base.entity';
-import { AuthenticationPlatform } from './enums/auth.enum.platform';
+import { AuthenticationPlatforms } from './enums/auth.enum.platform';
 
 
 
@@ -21,11 +21,11 @@ export class AuthEntity extends BaseEntity {
   
   @Column( {
     type   : 'enum',
-    enum   : AuthenticationPlatform,
-    default: AuthenticationPlatform.FIREBASE,
+    enum   : AuthenticationPlatforms,
+    default: AuthenticationPlatforms.FIREBASE,
     comment: '인증 플랫폼 이름',
   } )
-  platform: AuthenticationPlatform;
+  platform: AuthenticationPlatforms;
   
   @Column( {
     type    : 'varchar',

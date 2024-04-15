@@ -6,11 +6,13 @@ import { COOKIE_ACCESS_TOKEN_OPTIONS, COOKIE_REFRESH_TOKEN_OPTIONS } from '@/lib
 import { COOKIE_ACCESS_TOKEN_NAME, COOKIE_REFRESH_TOKEN_NAME } from '@/libs/utils/constants';
 import { Public } from '@/libs/utils/decoretors';
 import { CacheInterceptor } from '@nestjs/cache-manager';
-import { Body, Controller, Get, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { IAuthControllerAdapter } from './adaptor';
 import { ApiLoginDecorator, ApiRefreshDecorator, ApiRegisterDecorator } from './swagger';
+import { AuthEntity } from '@/libs/authentication/infrastructure/entities/auth.entity';
+import { ResponseDto } from '@/libs/fundamentals/interceptors/response/dto/response.dto';
 
 
 
@@ -26,34 +28,52 @@ export class AuthController implements IAuthControllerAdapter {
   @Post( 'register' )
   @ApiRegisterDecorator()
   @UseGuards( LocalAuthGuard )
-  async register(
+  public async register(
     @Body() registerUserDto: RegisterUserDto,
-  ): Promise<any> {
-    return await this.authService.register( registerUserDto );
+  ): Promise<ResponseDto<AuthEntity>> {
+    const auth = await this.authService.register( registerUserDto );
+
+    return new ResponseDto<AuthEntity>({
+      statusCode: HttpStatus.OK,
+      message: "생성 완료",
+      data: auth
+    })
   }
   
   
   @Post( 'login' )
   @ApiLoginDecorator()
-  async login(
+  public async login(
     @Body() loginDto: LoginDto,
     @Res( { passthrough: true } ) res: Response,
-  ): Promise<TokenDto> {
+  ): Promise<ResponseDto<TokenDto>> {
     const tokens: TokenDto = await this.authService.login( loginDto );
     
     res.cookie( COOKIE_ACCESS_TOKEN_NAME, tokens.access_token, COOKIE_ACCESS_TOKEN_OPTIONS );
     res.cookie( COOKIE_REFRESH_TOKEN_NAME, tokens.refresh_token, COOKIE_REFRESH_TOKEN_OPTIONS );
     
-    return tokens;
+    return new ResponseDto<TokenDto>({
+      statusCode: HttpStatus.OK,
+      message: "로그인 성공",
+      data: tokens
+    });
   }
   
   
   @Get( 'refresh' )
   @ApiRefreshDecorator()
   @UseGuards( JwtAuthRefreshGuard )
-  async refresh(
+  public async refresh(
     @Req() req: any,
-  ): Promise<Pick<TokenDto, 'access_token'>> {
-    return await this.authService.refreshAccessToken( req.user, req.cookie.refresh_token );
+    @Res( { passthrough: true } ) res: Response
+  ): Promise<ResponseDto<Pick<TokenDto, 'access_token'>>> {
+    const refreshAccessToken = await this.authService.refreshAccessToken( req.user, req.cookie.refresh_token );
+    res.cookie( COOKIE_ACCESS_TOKEN_NAME, refreshAccessToken, COOKIE_ACCESS_TOKEN_OPTIONS );
+
+    return new ResponseDto<Pick<TokenDto, "access_token">>({
+      statusCode: HttpStatus.OK,
+      message: "리프레시 토큰 발급",
+      data: refreshAccessToken
+    })
   }
 }

@@ -12,7 +12,7 @@ import { jwtModuleAsyncOptions } from '../helpers/jwt/jwt.module.option';
 import { JwtService } from '../helpers/jwt/jwt.service';
 import { HashingService } from '../utils/hashing/hashing.service';
 import { AuthService } from './application/services/auth.service';
-import { FirebaseService } from './infrastructure/platforms/firebase/firebase.service';
+import { FirebaseService } from '@/libs/infra/cloud/firebase/firebase.service';
 import { AuthRepository } from './infrastructure/repositories/auth.repository';
 import { AuthController } from './presentation/controllers/auth.controller';
 

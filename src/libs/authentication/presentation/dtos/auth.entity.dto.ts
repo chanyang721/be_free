@@ -1,7 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 import { BaseEntityDto } from '@/libs/database/orm/typeorm/base/base.entity.dto';
-import { AuthenticationPlatform } from '../../infrastructure/entities/enums/auth.enum.platform';
+import { AuthenticationPlatforms } from '@/libs/authentication/infrastructure/entities/enums/auth.enum.platform';
 
 
 
@@ -22,15 +22,19 @@ export class AuthEntityDto extends PartialType( BaseEntityDto ) {
   @IsNotEmpty()
   @MaxLength( 100 )
   uid: string;
+
+
   @ApiProperty( {
     type       : 'string',
     description: '인증 서버 플랫폼 이름',
     required   : false,
     example    : 'FIREBASE',
   } )
-  @IsEnum( AuthenticationPlatform )
+  @IsEnum( AuthenticationPlatforms )
   @IsOptional()
-  platform: AuthenticationPlatform;
+  platform: AuthenticationPlatforms;
+
+
   @ApiProperty( {
     type       : 'string',
     description: 'Main 서버에서 발급한 리프레시 토큰을 암호화한 값',
