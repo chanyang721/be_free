@@ -5,7 +5,7 @@ import { HashingService } from '@/libs/utils/hashing/hashing.service';
 import { AuthRepository } from '../../infrastructure/repositories/auth.repository';
 import { AuthenticationPlatforms } from '@/libs/authentication/infrastructure/entities/enums/auth.enum.platform';
 import { AuthEntity } from '@/libs/authentication/infrastructure/entities/auth.entity';
-import { Platform, PlatformService } from '@/libs/infra/cloud/platfrom/platform.service';
+import { Platform, PlatformService } from '@/libs/infra/cloud/platfromAdaptor/platform.service';
 import { FirebaseService } from '@/libs/infra/cloud/firebase/firebase.service';
 import { AwsCognitoService } from '@/libs/infra/cloud/aws/cognito/cognito.service';
 import { UserEntity } from '@/users/infrastructure/entities';

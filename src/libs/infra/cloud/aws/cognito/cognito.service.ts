@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PlatformAdaptor } from '@/libs/infra/cloud/platfrom/platform.adaptor';
+import { PlatformAdaptor } from '@/libs/infra/cloud/platfromAdaptor/platform.adaptor';
 import { CommonConfigService } from '@/libs/config/common.config.service';
 import { UserEntity } from '@/users/infrastructure/entities';
 

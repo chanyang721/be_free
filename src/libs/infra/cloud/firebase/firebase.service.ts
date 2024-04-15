@@ -3,7 +3,7 @@ import firebase from 'firebase-admin';
 import { CommonConfigService } from '@/libs/config/common.config.service';
 import { Credential } from 'firebase-admin/lib/app/credential';
 import { app } from 'firebase-admin/lib/firebase-namespace-api';
-import { PlatformAdaptor } from '@/libs/infra/cloud/platfrom/platform.adaptor';
+import { PlatformAdaptor } from '@/libs/infra/cloud/platfromAdaptor/platform.adaptor';
 
 
 @Injectable()
